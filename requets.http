@@ -1,0 +1,35 @@
+@AccessToekn=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJkODBlZTUwYi1lY2U0LTQxZDctOGE4My00YmI3NDFhNGRmYzQiLCJzaWQiOiIwNjlkODY5Zi05MGE5LTRlNzMtYWM2Yy0wZGE2YjY0NjBjZDQiLCJyb2xlcyI6WyJ1c2VyIl0sImlhdCI6MTc5MzE0OTU0NywiZXhwIjoxNzkzMTUwNDQ3LCJpc3MiOiJhdXRoLXRlbXBsYXRlIiwiYXVkIjoiYXV0aC10ZW1wbGF0ZS1jbGllbnRzIn0.tOSgYMOU2WQbq54FiDYSfyHFgeszdTSchmkASUL3YXI
+@refreshToken=069d869f-90a9-4e73-ac6c-0da6b6460cd4.D-7-ntxoQd5Pn2fENM6mgbm6p_FnrT6GAj2aHcn4R_Q
+
+### registering a user
+POST http://localhost:3000/auth/register
+Content-Type: application/json
+
+{
+  "email": "me@example.com",
+  "password": "password-123"
+}
+
+### Login (copy accessToken and refreshToken from the response)
+
+POST http://localhost:3000/auth/login
+Content-Type: application/json
+
+{
+  "email": "me@example.com",
+  "password": "password-123"
+}
+
+### Call a protected route
+GET http://localhost:3000/auth/me
+Authorization: Bearer {{AccessToekn}}
+### Admin-only route (a normal user gets 403)
+GET http://localhost:3000/admin/stats
+Authorization: Bearer {{AccessToekn}}
+### Get a new token pair (the old refresh token stops working)
+POST http://localhost:3000/auth/refresh
+Content-Type: application/json
+
+{
+    "refreshToken":"{{refreshToken}}"
+}
